@@ -9,3 +9,7 @@ $ cd iran-calendar-events/
 $ python3 scraper.py 1395 09 16
 روز دانشجو
 ```
+
+## License
+
+[MIT](LICENSE)
