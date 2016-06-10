@@ -10,6 +10,7 @@ $ cd iran-calendar-events/
 
 ## Use
 You can use the script in two ways:
+
 1. In `python3`. The `get_events` function returns a list of events:
 ```python
 >>> import scraper
