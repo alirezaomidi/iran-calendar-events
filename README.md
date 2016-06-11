@@ -6,6 +6,7 @@ This script takes **year**, **month** and **day** of an specific date and scrape
 ```bash
 $ git clone https://github.com/alirezaomidi/iran-calendar-events.git
 $ cd iran-calendar-events/
+$ python3 setup.py install
 ```
 
 ## Use
