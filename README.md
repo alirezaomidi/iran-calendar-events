@@ -3,8 +3,15 @@
 This script takes **year**, **month** and **day** of an specific date and scrapes [time.ir](http://time.ir) for events.
 
 ## Dependencies
-* beautifulsoup4
-* html5lib
+* `beautifulsoup4`
+* `html5lib`
+* `requests`
+
+To install dependencies, use `pip`:
+
+```bash
+$ pip install -r requirements.txt --upgrade
+```
 
 ## Install
 ```bash
