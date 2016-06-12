@@ -2,6 +2,10 @@
 
 This script takes **year**, **month** and **day** of an specific date and scrapes [time.ir](http://time.ir) for events.
 
+## Dependencies
+* beautifulsoup4
+* html5lib
+
 ## Install
 ```bash
 $ git clone https://github.com/alirezaomidi/iran-calendar-events.git
@@ -21,7 +25,7 @@ You can use the script in two ways:
 
 2. In `bash`:
 ```bash
-$ python3 scraper.py 1395 9 16
+$ python3 -m scraper 1395 9 16
 روز دانشجو
 ```
 
