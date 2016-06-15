@@ -1,6 +1,8 @@
 from sys import argv, prefix, version_info as vi, platform
 from shutil import copy
 
+script_name = 'ircalevents.py'
+
 if __name__ == '__main__':
 
     # Install arguments is passed
@@ -12,6 +14,6 @@ if __name__ == '__main__':
 
         # Copy files to python library site-packages folder
         if platform in ['win32', 'cygwin']: # Platform is windows based
-            copy('scraper.py', win_path)
+            copy(script_name, win_path)
         elif platform in ['linux', 'linux2', 'darwin']: # Platform is unix based
-            copy('scraper.py', unix_path)
+            copy(script_name, unix_path)
