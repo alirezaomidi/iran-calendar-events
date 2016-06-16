@@ -26,7 +26,7 @@ You can use the script in two ways:
 1. In `python3`. The `get_events` function returns a list of events:
 ```python
 >>> import ircalevents
->>> scraper.get_events(1395, 1, 6)
+>>> ircalevents.get_events(1395, 1, 6)
 ['روز امید، روز شادباش نویسی', 'زادروز آشو زرتشت، اَبَراِنسان بزرگ تاریخ']
 ```
 
