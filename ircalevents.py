@@ -4,11 +4,16 @@ from bs4 import BeautifulSoup
 
 BASE_URL = 'http://www.time.ir/fa/event/list/0/'
 
+
 def get_events(year, month, day):
 
     url = BASE_URL + '%4d/%02d/%02d' % (year, month, day)
 
-    r = requests.get(url)
+    try:
+        r = requests.get(url)
+    except requests.RequestException as e:
+        print(e)
+        return None
 
     if r.ok:
         bs = BeautifulSoup(r.text, 'html5lib')
@@ -24,15 +29,24 @@ def get_events(year, month, day):
                     events.append(' '.join(event))
         return events
     else:
-        # TODO: if the request was not ok: do sth
-        pass
+        return None
 
 if __name__ == '__main__':
 
-    # TODO: check for args validity
+    # Check for args validity
+    if len(sys.argv[1:]) != 3:
+        print('Not enough arguments.')
+        exit()
+
     year, month, day = map(int, sys.argv[1:])
 
     events = get_events(year, month, day)
 
-    for e in events:
-        print(e)
+    if events is None:  # Error scraping data
+        print('Error getting events from server. Try again later.')
+    else:
+        if events:  # If there are events for the date
+            for e in events:
+                print(e)
+        else:  # No events
+            print('No events.')
