@@ -27,6 +27,7 @@ def get_events(year, month, day=None):
     parsed_html = BeautifulSoup(r.text, 'html.parser')
 
     # What is going to be returned?
+    # Each part of code described in upper comment.
     if day is None:
         #        Day of month       , Event description                 Events list of the month
         return [(li.contents[1].text, li.contents[2].strip()) for li in parsed_html.ul.find_all('li')]
@@ -65,10 +66,10 @@ if __name__ == '__main__':
 
     # Processing event list returned
     if events:
-        if day is None:
+        if day is None:  # Month events
             for e in events:
                 print('Day: {}\nEvent: {}'.format(*e))
-        else:
+        else:  # Day events
             for e in events:
                 print(e)
     else:  # No events
