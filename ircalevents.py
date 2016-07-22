@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 import requests
 from bs4 import BeautifulSoup
@@ -5,9 +7,9 @@ from bs4 import BeautifulSoup
 BASE_URL = 'http://www.time.ir/fa/event/list/0/'
 
 
-def get_events(year, month, day):
+def get_events(year, month, day=None):
 
-    url = BASE_URL + '%4d/%02d/%02d' % (year, month, day)
+    url = BASE_URL + ('%4d/%02d/%02d' % (year, month, day) if day is not None else '%4d/%02d' % (year, month))
 
     try:
         r = requests.get(url)
@@ -31,16 +33,30 @@ def get_events(year, month, day):
     else:
         return None
 
+get_day_events = lambda y, m, d: get_events(y, m, d)
+
+get_month_events = lambda y, m: get_events(y, m)
+
 if __name__ == '__main__':
 
-    # Check for args validity
-    if len(sys.argv[1:]) != 3:
+    # Month events
+    if len(sys.argv[1:]) == 2:
+        # Get year and month from command-line
+        year, month = map(int, sys.argv[1:])
+        # All events of the month
+        events = get_month_events(year, month)
+
+    # Day events
+    elif len(sys.argv[1:]) == 3:
+        # Get year, month and day from command-line
+        year, month, day = map(int, sys.argv[1:])
+        # All events of the day
+        events = get_day_events(year, month, day)
+
+    # Not enough arguments
+    else:
         print('Not enough arguments.')
         exit()
-
-    year, month, day = map(int, sys.argv[1:])
-
-    events = get_events(year, month, day)
 
     if events is None:  # Error scraping data
         print('Error getting events from server. Try again later.')

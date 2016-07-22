@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from sys import argv, prefix, version_info as vi, platform
 from shutil import copy
 
