@@ -9,35 +9,40 @@ BASE_URL = 'http://www.time.ir/fa/event/list/0/'
 
 def get_events(year, month, day=None):
 
-    url = BASE_URL + ('%4d/%02d/%02d' % (year, month, day) if day is not None else '%4d/%02d' % (year, month))
+    # Base url to get information of events
+    if day is None:  # Full list of events in a month
+        url = BASE_URL + '{}/{}'.format(year, month)
+    else:  # Single day events list
+        url = BASE_URL + '{}/{}/{}'.format(year, month, day)
 
-    try:
-        r = requests.get(url)
-    except requests.RequestException as e:
-        print(e)
-        return None
+    # Send a request and get all information
+    # Why catching exception an printing error is bad?
+    # Because maybe user don't want the error to be printed!
+    r = requests.get(url)
 
-    if r.ok:
-        bs = BeautifulSoup(r.text, 'html5lib')
-        ul = [i for i in bs.ul.findChildren() if str(i).startswith('<li')]
-        events = []
-        for li in ul:
-            tags = li.contents[2:]
-            for t in tags:
-                event = []
-                if t.string:
-                    event += t.string.strip().split()
-                if event:
-                    events.append(' '.join(event))
-        return events
+    # Raises HTTPError exception if response to the request was not ok.
+    r.raise_for_status()
+
+    # Parse html
+    parsed_html = BeautifulSoup(r.text, 'html.parser')
+
+    # What is going to be returned?
+    if day is None:
+        #        Day of month       , Event description                 Events list of the month
+        return [(li.contents[1].text, li.contents[2].strip()) for li in parsed_html.ul.find_all('li')]
     else:
-        return None
+        #       Event description                Events list of the day
+        return [li.contents[2].strip() for li in parsed_html.ul.find_all('li')]
 
-get_day_events = lambda y, m, d: get_events(y, m, d)
 
-get_month_events = lambda y, m: get_events(y, m)
+def get_day_events(y, m, d): return get_events(y, m, d)
+
+
+def get_month_events(y, m): return get_events(y, m)
+
 
 if __name__ == '__main__':
+    year, month, day, events = None, None, None, None
 
     # Month events
     if len(sys.argv[1:]) == 2:
@@ -58,11 +63,13 @@ if __name__ == '__main__':
         print('Not enough arguments.')
         exit()
 
-    if events is None:  # Error scraping data
-        print('Error getting events from server. Try again later.')
-    else:
-        if events:  # If there are events for the date
+    # Processing event list returned
+    if events:
+        if day is None:
+            for e in events:
+                print('Day: {}\nEvent: {}'.format(*e))
+        else:
             for e in events:
                 print(e)
-        else:  # No events
-            print('No events.')
+    else:  # No events
+        print('No events.')
