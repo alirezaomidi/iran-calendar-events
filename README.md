@@ -23,7 +23,7 @@ $ python3 setup.py install
 You can use the script in two ways:
 
 ### Python Script
-In `python3`. The `get_events` function returns a list of events:
+In `python3`. The `get_month_events` and `get_day_events` functions returns a list of events:
 
 ```python
 >>> import ircalevents
