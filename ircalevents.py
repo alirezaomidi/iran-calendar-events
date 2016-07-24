@@ -29,8 +29,14 @@ def get_events(year, month, day=None):
     # What is going to be returned?
     # Each part of code described in upper comment.
     if day is None:
-        #        Day of month       , Event description                 Events list of the month
-        return [(li.contents[1].text, li.contents[2].strip()) for li in parsed_html.ul.find_all('li')]
+        events = {}
+        #             Day of month       , Event description                 Events list of the month
+        for k, v in ((li.contents[1].text, li.contents[2].strip()) for li in parsed_html.ul.find_all('li')):
+            if k in events:
+                events[k].append(v)
+            else:
+                events[k] = [v]
+        return events
     else:
         #       Event description                Events list of the day
         return [li.contents[2].strip() for li in parsed_html.ul.find_all('li')]
@@ -68,7 +74,8 @@ if __name__ == '__main__':
     if events:
         if day is None:  # Month events
             for e in events:
-                print('Day: {}\nEvent: {}'.format(*e))
+                events_list = events[e]
+                print('Day: {}\nEvent{}: {}'.format(e, '' if len(events_list) <= 1 else 's', events_list))
         else:  # Day events
             for e in events:
                 print(e)
