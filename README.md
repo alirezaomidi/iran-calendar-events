@@ -19,6 +19,12 @@ $ cd iran-calendar-events/
 $ python3 setup.py install
 ```
 
+## Uninstallation
+```bash
+$ cd iran-calendar-events/
+$ python3 setup.py uninstall
+```
+
 ## Usage
 You can use the script in two ways:
 
