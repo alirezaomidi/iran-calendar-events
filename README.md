@@ -1,4 +1,4 @@
-# Iran's Calendar Events
+# Iran's Calendar Events [![Build Status](https://travis-ci.org/alirezaomidi/iran-calendar-events.svg?branch=master)](https://travis-ci.org/alirezaomidi/iran-calendar-events)
 
 This python3 script scrapes [time.ir](http://time.ir) for a **day** or a **month** events.
 
